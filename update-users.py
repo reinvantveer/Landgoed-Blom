@@ -17,12 +17,7 @@ def main(args: Namespace):
             records.append(row)
             user_names.append(row['Mail'])
 
-    # Read out the users in Nextcloud
-    nc = Nextcloud(nextcloud_url=args.server, username=args.username, password=args.password)
-    users = []
-    for user_id in nc.users.get_list():
-        user = nc.users.get_user(user_id)
-        users.append(user)
+    users = get_user_ids(args)
 
         if user.user_id not in user_names:
             logger.warning(f'Disabling user {user.user_id} not found in the master user list')
@@ -32,7 +27,67 @@ def main(args: Namespace):
                 logger.info(f'Dry-run: Would have disabled user {user.user_id}')
 
     for record in records:
-        logger.info(f'Updating user: {record['username']}')
+        if record['Mail'] not in user_ids:
+            if not args.dry_run:
+                logger.info(f'Adding user: {record['Mail']}')
+                user = {
+                    'userid': record['Mail'],
+                    'password': generate_password(),
+                    'displayName': record['Naam']
+                }
+                create_user(args, user)
+            else:
+                logger.info(f'Dry-run: Would have added user {record['Mail']}')
+
+def create_user(args: Namespace, user: dict) -> None:
+    resp = requests.post(
+        url=f'{args.server}/ocs/v1.php/cloud/users',
+        json=user,
+        auth=(args.username, args.password),
+        headers={
+            'OCS-APIRequest': 'true',
+            'Content-Type': 'application/json'
+        }
+    )
+    resp.raise_for_status()
+
+
+def update_user(args: Namespace, user: dict) -> None:
+    resp = requests.put(
+        url=f'{args.server}/ocs/v1.php/cloud/users/{user["id"]}',
+        json=user,
+        auth=(args.username, args.password),
+        headers={
+            'OCS-APIRequest': 'true',
+            'Content-Type': 'application/json'
+        }
+    )
+    resp.raise_for_status()
+
+
+def get_user(args, user_id) -> dict:
+    resp = requests.get(
+        url=f'{args.server}/ocs/v1.php/cloud/users/{user_id}?format=json',
+        auth=(args.username, args.password),
+        headers={'OCS-APIRequest': 'true'}
+    )
+    resp.raise_for_status()
+    user = resp.json()
+    return user
+
+
+def get_user_ids(args):
+    """Read out the users in Nextcloud"""
+    resp = requests.get(
+        url=f'{args.server}/ocs/v1.php/cloud/users?format=json',
+        auth=(args.username, args.password),
+        headers={'OCS-APIRequest': 'true'}
+    )
+    resp.raise_for_status()
+    users = resp.json()
+
+    return users
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update users in the Nextcloud database')
