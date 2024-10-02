@@ -6,11 +6,6 @@ import requests
 from loguru import logger
 
 
-def generate_password():
-    pass
-
-
-
 def main(args: Namespace):
     records: list[dict[str, str]] = []
     user_names: list[str] = []
@@ -99,6 +94,10 @@ def get_user_ids(args):
     users = resp.json()
 
     return users
+
+
+def generate_password():
+    pass
 
 
 if __name__ == '__main__':
