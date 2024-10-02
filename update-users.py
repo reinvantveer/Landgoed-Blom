@@ -2,8 +2,13 @@ import argparse
 import csv
 from argparse import Namespace
 
+import requests
 from loguru import logger
-from nc_py_api import Nextcloud
+
+
+def generate_password():
+    pass
+
 
 
 def main(args: Namespace):
