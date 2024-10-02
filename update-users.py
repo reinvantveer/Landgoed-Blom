@@ -24,12 +24,17 @@ def main(args: Namespace):
 
     users = get_user_ids(args)
 
-        if user.user_id not in user_names:
-            logger.warning(f'Disabling user {user.user_id} not found in the master user list')
+    user_ids = users['ocs']['data']['users']
+    for user_id in user_ids:
+        if user_id == 'Admin':
+            continue
+
+        if user_id not in user_names:
+            user = get_user(args, user_id)
             if not args.dry_run:
                 nc.users.disable(user.user_id)
             else:
-                logger.info(f'Dry-run: Would have disabled user {user.user_id}')
+                logger.info(f'Dry-run: Would have disabled user {user_id}')
 
     for record in records:
         if record['Mail'] not in user_ids:
