@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "landgoed-blom"
+version = "0.1.0"
+description = "Automation scripts for Landgoed Blom"
+authors = ["reinvantveer <rein@vantveer.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+nc-py-api = "^0.17.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
