@@ -15,7 +15,7 @@ def main(args: Namespace):
         reader = csv.DictReader(f)
         for row in reader:
             records.append(row)
-            user_names.append(row['gebruikersnaam'])
+            user_names.append(row['Mail'])
 
     # Read out the users in Nextcloud
     nc = Nextcloud(nextcloud_url=args.server, username=args.username, password=args.password)
