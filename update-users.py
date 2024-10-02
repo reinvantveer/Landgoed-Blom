@@ -96,8 +96,11 @@ def get_user_ids(args):
     return users
 
 
-def generate_password():
-    pass
+def generate_password(length: int = 20):
+    import random
+    import string
+
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
 if __name__ == '__main__':
