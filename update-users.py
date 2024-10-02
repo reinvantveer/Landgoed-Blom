@@ -32,7 +32,9 @@ def main(args: Namespace):
         if user_id not in user_names:
             user = get_user(args, user_id)
             if not args.dry_run:
-                nc.users.disable(user.user_id)
+                logger.warning(f'Disabling user {user_id} not found in the master user list')
+                user['ocs']['data']['enabled'] = False
+                update_user(args, user['ocs']['data'])
             else:
                 logger.info(f'Dry-run: Would have disabled user {user_id}')
 
