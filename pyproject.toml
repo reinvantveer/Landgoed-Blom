@@ -2,7 +2,7 @@
 name = "landgoed-blom"
 version = "0.1.0"
 description = "Automation scripts for Landgoed Blom"
-authors = ["reinvantveer <rein@vantveer.me>"]
+authors = ["Pioniersgroep Landgoed Blom <pioniersgroep@buitenhuisblom.nl>"]
 license = "MIT"
 readme = "README.md"
 
@@ -10,7 +10,6 @@ readme = "README.md"
 python = "^3.12"
 loguru = "^0.7.2"
 requests = "^2.32.3"
-
 
 [build-system]
 requires = ["poetry-core"]
