@@ -46,62 +46,6 @@ def main(args: Namespace):
             else:
                 logger.info(f'Dry-run: Would have added user {record['Mail']}')
 
-def create_user(args: Namespace, user: dict) -> None:
-    resp = requests.post(
-        url=f'{args.server}/ocs/v1.php/cloud/users',
-        json=user,
-        auth=(args.username, args.password),
-        headers={
-            'OCS-APIRequest': 'true',
-            'Content-Type': 'application/json'
-        }
-    )
-    resp.raise_for_status()
-
-
-def update_user(args: Namespace, user: dict) -> None:
-    resp = requests.put(
-        url=f'{args.server}/ocs/v1.php/cloud/users/{user["id"]}',
-        json=user,
-        auth=(args.username, args.password),
-        headers={
-            'OCS-APIRequest': 'true',
-            'Content-Type': 'application/json'
-        }
-    )
-    resp.raise_for_status()
-
-
-def get_user(args, user_id) -> dict:
-    resp = requests.get(
-        url=f'{args.server}/ocs/v1.php/cloud/users/{user_id}?format=json',
-        auth=(args.username, args.password),
-        headers={'OCS-APIRequest': 'true'}
-    )
-    resp.raise_for_status()
-    user = resp.json()
-    return user
-
-
-def get_user_ids(args):
-    """Read out the users in Nextcloud"""
-    resp = requests.get(
-        url=f'{args.server}/ocs/v1.php/cloud/users?format=json',
-        auth=(args.username, args.password),
-        headers={'OCS-APIRequest': 'true'}
-    )
-    resp.raise_for_status()
-    users = resp.json()
-
-    return users
-
-
-def generate_password(length: int = 20):
-    import random
-    import string
-
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update users in the Nextcloud database')
