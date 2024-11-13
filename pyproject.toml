@@ -1,3 +1,9 @@
+[tool.landgoed-blom]
+# Nextcloud internal url for self-managed user list
+server_url = "https://nx52347.your-storageshare.de"
+user_list_file_id = "12035"
+user = "Admin"
+
 [tool.poetry]
 name = "landgoed-blom"
 version = "0.1.0"
