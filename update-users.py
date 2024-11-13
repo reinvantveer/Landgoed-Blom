@@ -1,9 +1,11 @@
 import argparse
-import csv
 from argparse import Namespace
 
-import requests
 from loguru import logger
+
+from nextcloud.auth import generate_password
+from nextcloud.nextcloud_server import Nextcloud
+from nextcloud.users import get_user_ids, create_user
 
 
 def main(args: Namespace):
@@ -36,7 +38,7 @@ def main(args: Namespace):
                     'password': generate_password(),
                     'displayName': record['Naam']
                 }
-                create_user(args, user)
+                create_user(nc, user)
             else:
                 logger.info(f'Dry-run: Would have added user {record['Mail']}')
 
