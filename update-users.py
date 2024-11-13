@@ -52,14 +52,6 @@ if __name__ == '__main__':
     password_help = 'The password of the admin user'
     parser.add_argument('-p', '--password', type=str, help=password_help, required=True)
 
-    update_help = 'The file containing the users to update'
-    csv_path = 'data/users.csv'
-    parser.add_argument('-f', '--file', type=str, help=update_help, default=csv_path)
-
-    server_help = 'The URL of the Nextcloud server'
-    server_default = 'https://nx52347.your-storageshare.de/'
-    parser.add_argument('-s', '--server', type=str, help=server_help, default=server_default)
-
     dry_run_help = 'Do not actually update the users'
     parser.add_argument('--dry-run', action='store_true', help=dry_run_help, default=True)
 
