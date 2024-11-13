@@ -10,14 +10,8 @@ def main(args: Namespace):
     records: list[dict[str, str]] = []
     user_names: list[str] = []
 
-    with open(args.file) as f:
-        # Parse the CSV file
-        reader = csv.DictReader(f)
-        for row in reader:
-            records.append(row)
-            user_names.append(row['Mail'])
-
-    users = get_user_ids(args)
+    nc = Nextcloud(config_file=args.config, password=args.password)
+    users = get_user_ids(nc)
 
     user_ids = users['ocs']['data']['users']
     for user_id in user_ids:
