@@ -32,5 +32,3 @@ def load_users_from_spreadsheet(nextcloud: Nextcloud) -> dict[str, str]:
     user_list = {k.lower(): v for k, v in user_list.items()}
 
     return user_list
-
-    return set(mail_addresses)
