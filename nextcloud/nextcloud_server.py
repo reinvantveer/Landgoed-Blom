@@ -18,4 +18,5 @@ class Nextcloud:
 
         self.server = self.config['server_url']
         self.username = self.config['user']
-        self.password = os.environ['PASSWORD']
+        self.password = os.environ['NEXTCLOUD_PASSWORD']
+        self.file_path = self.config['user_list_file_path']

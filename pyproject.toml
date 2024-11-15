@@ -1,7 +1,7 @@
 [tool.landgoed-blom]
 # Nextcloud internal url for self-managed user list
 server_url = "https://nx52347.your-storageshare.de"
-user_list_file_id = "12035"
+user_list_file_path = "Centrale Kring/Gebruikers Pioniersgroep.xlsx"
 user = "Admin"
 
 [tool.poetry]
