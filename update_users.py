@@ -4,7 +4,7 @@ from argparse import Namespace
 from loguru import logger
 
 from nextcloud.auth import generate_password
-from nextcloud.master_userlist import load_user_ids_from_spreadsheet
+from nextcloud.master_userlist import load_users_from_spreadsheet
 from nextcloud.nextcloud_server import Nextcloud
 from nextcloud.users import get_user_ids, create_user, get_user, update_user
 
@@ -14,7 +14,7 @@ def main(args: Namespace) -> None:
     # Get the list of users from the Nextcloud server administration
     existing_nextcloud_users = get_user_ids(nc)
     # Get the list of users from the master user list in the Excel file
-    master_user_list = load_user_ids_from_spreadsheet(nc)
+    master_user_list = load_users_from_spreadsheet(nc)
     # Extract out the user ids
     master_user_ids = set(master_user_list.keys())
 
