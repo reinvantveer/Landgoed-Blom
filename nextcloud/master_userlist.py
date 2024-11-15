@@ -26,6 +26,9 @@ def load_users_from_spreadsheet(nextcloud: Nextcloud) -> dict[str, str]:
     # Open the Excel file and read the users
     df = pandas.read_excel(resp.content)
     # We always use mail addresses as the user id
-    mail_addresses = df['Mail'].filter(regex='@', axis=0)
+    df = df[df['Mail'].str.contains('@')]
+    user_list = dict(df.filter(items=['Mail', 'Naam']).values)
+
+    return user_list
 
     return set(mail_addresses)
