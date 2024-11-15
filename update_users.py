@@ -4,6 +4,7 @@ from argparse import Namespace
 from loguru import logger
 
 from nextcloud.auth import generate_password
+from nextcloud.mail_server import LandgoedBlomMailServer
 from nextcloud.master_userlist import load_users_from_spreadsheet
 from nextcloud.nextcloud_server import Nextcloud
 from nextcloud.users import get_user_ids, create_user, get_user, update_user
@@ -19,6 +20,7 @@ def main(args: Namespace) -> None:
     master_user_ids = set(master_user_list.keys())
 
     users_not_yet_in_nextcloud = master_user_ids.difference(existing_nextcloud_users)
+    mail_server = LandgoedBlomMailServer(config_file=args.config)
 
     for user_id in users_not_yet_in_nextcloud:
         if args.dry_run:
@@ -26,12 +28,16 @@ def main(args: Namespace) -> None:
             continue
 
         logger.info(f'Adding user: {user_id}')
+        user_password = generate_password()
         user = {
             'userid': user_id,
-            'password': generate_password(),
+            'password': user_password,
             'displayName': user_id
         }
+        # Create the user in Nextcloud
         create_user(nc, user)
+        # Send the user an email with the login information
+        mail_server.send_create_mail(user_id, master_user_list[user_id], user_password)
 
 
 if __name__ == '__main__':
