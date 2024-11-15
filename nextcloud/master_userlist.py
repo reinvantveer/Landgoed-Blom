@@ -4,7 +4,17 @@ import requests
 from nextcloud.nextcloud_server import Nextcloud
 
 
-def load_users_from_spreadsheet(nextcloud: Nextcloud) -> set[str]:
+def load_users_from_spreadsheet(nextcloud: Nextcloud) -> dict[str, str]:
+    """
+    Load the user ids from the spreadsheet
+
+    Args:
+        nextcloud: The Nextcloud object
+
+    Returns:
+        A dictionary with the user ids as keys and the display names as values
+    """
+
     # Use the WebDAV API to get the file by id
 
     resp = requests.get(
