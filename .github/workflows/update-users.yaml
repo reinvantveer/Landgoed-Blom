@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      NEXTCLOUD_PASSWORD:
+        description: 'Nextcloud password'
+        required: true
+      MAIL_PASSWORD:
+        description: 'Mail password for pioniersgroep@buitenhuisblom.nl to send the mail'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install Poetry
+      run: curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Run tests
+      run: poetry run pytest
+
+    - name: Execute update_users.py
+      env:
+        NEXTCLOUD_PASSWORD: ${{ github.event.inputs.NEXTCLOUD_PASSWORD }}
+        MAIL_PASSWORD: ${{ github.event.inputs.MAIL_PASSWORD }}
+      run: poetry run python update_users.py
