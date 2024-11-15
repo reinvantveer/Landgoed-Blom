@@ -4,19 +4,19 @@ from argparse import Namespace
 from loguru import logger
 
 from nextcloud.auth import generate_password
+from nextcloud.master_userlist import load_users_from_spreadsheet
 from nextcloud.nextcloud_server import Nextcloud
-from nextcloud.users import get_user_ids, create_user
+from nextcloud.users import get_user_ids, create_user, get_user, update_user
 
 
-def main(args: Namespace):
-    records: list[dict[str, str]] = []
-    user_names: list[str] = []
-
+def main(args: Namespace) -> None:
     nc = Nextcloud(config_file=args.config, password=args.password)
-    users = get_user_ids(nc)
+    # Get the list of users from the Nextcloud server administration
+    existing_nextcloud_users = get_user_ids(nc)
+    # Get the list of users from the master user list in the Excel file
+    master_user_list = load_users_from_spreadsheet(nc)
 
-    user_ids = users['ocs']['data']['users']
-    for user_id in user_ids:
+    for user_id in existing_nextcloud_users:
         if user_id == 'Admin':
             continue
 
