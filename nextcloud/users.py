@@ -52,6 +52,8 @@ def get_user_ids(nextcloud: Nextcloud) -> set[str]:
     users = resp.json()
 
     usernames = users['ocs']['data']['users']
+    # Lowercase all user ids
+    usernames = {user.lower() for user in usernames}
 
     # We always use mail addresses as the user id
     return set(user for user in usernames if '@' in user)

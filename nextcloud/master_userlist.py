@@ -28,6 +28,8 @@ def load_users_from_spreadsheet(nextcloud: Nextcloud) -> dict[str, str]:
     # We always use mail addresses as the user id
     df = df[df['Mail'].str.contains('@')]
     user_list = dict(df.filter(items=['Mail', 'Naam']).values)
+    # lowercase the keys
+    user_list = {k.lower(): v for k, v in user_list.items()}
 
     return user_list
 
