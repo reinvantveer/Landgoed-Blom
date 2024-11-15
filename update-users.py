@@ -21,16 +21,16 @@ def main(args: Namespace) -> None:
             continue
 
         if user_id not in user_names:
-            user = get_user(args, user_id)
+            user = get_user(nc, user_id)
             if not args.dry_run:
                 logger.warning(f'Disabling user {user_id} not found in the master user list')
                 user['ocs']['data']['enabled'] = False
-                update_user(args, user['ocs']['data'])
+                update_user(nc, user['ocs']['data'])
             else:
                 logger.info(f'Dry-run: Would have disabled user {user_id}')
 
     for record in records:
-        if record['Mail'] not in user_ids:
+        if record['Mail'] not in existing_nextcloud_users:
             if not args.dry_run:
                 logger.info(f'Adding user: {record['Mail']}')
                 user = {
