@@ -41,7 +41,7 @@ def get_user(nextcloud: Nextcloud, user_id) -> dict:
     return user
 
 
-def get_user_ids(nextcloud: Nextcloud) -> dict:
+def get_user_ids(nextcloud: Nextcloud) -> set[str]:
     """Read out the users in Nextcloud"""
     resp = requests.get(
         url=f'{nextcloud.server}/ocs/v1.php/cloud/users?format=json',
@@ -51,4 +51,7 @@ def get_user_ids(nextcloud: Nextcloud) -> dict:
     resp.raise_for_status()
     users = resp.json()
 
-    return users
+    usernames = users['ocs']['data']['users']
+
+    # We always use mail addresses as the user id
+    return set(user for user in usernames if '@' in user)
