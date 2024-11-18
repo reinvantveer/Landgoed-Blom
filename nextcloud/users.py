@@ -1,5 +1,4 @@
 from dataclasses import asdict
-from typing import Any
 
 import requests
 
