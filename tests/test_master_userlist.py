@@ -2,7 +2,7 @@ from nextcloud.master_userlist import load_users_from_spreadsheet
 from nextcloud.nextcloud_server import Nextcloud
 
 
-def test_get_master_userlist():
+def test_get_master_userlist() -> None:
     nc = Nextcloud()
     user_list = load_users_from_spreadsheet(nc)
 

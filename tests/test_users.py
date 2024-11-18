@@ -3,7 +3,7 @@ from nextcloud.nextcloud_server import Nextcloud, NextcloudUser
 from nextcloud.users import get_user_ids, create_user, delete_user
 
 
-def test_get_user_ids():
+def test_get_user_ids() -> None:
     nc = Nextcloud()
     user_ids = get_user_ids(nc)
 
@@ -12,10 +12,10 @@ def test_get_user_ids():
         assert '@' in user_id
 
 # Integration tests
-def test_add_user():
+def test_add_user() -> None:
     nc = Nextcloud()
-    user = 'pioniersgroep@buitenhuisblom.nl'
-    user = NextcloudUser(userid=user, email=user, password=generate_password(), displayName='Test User')
+    username = 'pioniersgroep@buitenhuisblom.nl'
+    user = NextcloudUser(userid=username, email=username, password=generate_password(), displayName='Test User')
     create_user(nc, user)
     user_ids = get_user_ids(nc)
     assert user.userid in user_ids
