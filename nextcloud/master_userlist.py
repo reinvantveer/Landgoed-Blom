@@ -14,8 +14,7 @@ def load_users_from_spreadsheet(nextcloud: Nextcloud) -> dict[str, str]:
     Returns:
         A dictionary with the user ids as keys and the display names as values
     """
-
-    # Use the WebDAV API to get the file by id
+    # Use the WebDAV API to get the file by path
     resp = requests.get(
         url=f'{nextcloud.server}/remote.php/dav/files/{nextcloud.username}/{nextcloud.file_path}',
         auth=(nextcloud.username, nextcloud.password),
