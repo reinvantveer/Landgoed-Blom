@@ -79,7 +79,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update users in the Nextcloud database')
 
     dry_run_help = 'Do not actually update the users'
-    parser.add_argument('--dry-run', action='store_true', help=dry_run_help, default=True)
+    parser.add_argument('--dry-run', action='store_true', help=dry_run_help, default=False)
 
     config_help = 'Path to the configuration file'
     parser.add_argument('--config', help=config_help, default='pyproject.toml')
