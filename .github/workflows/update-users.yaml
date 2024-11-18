@@ -36,4 +36,4 @@ jobs:
       env:
         NEXTCLOUD_PASSWORD: ${{ github.event.inputs.NEXTCLOUD_PASSWORD }}
         MAIL_PASSWORD: ${{ github.event.inputs.MAIL_PASSWORD }}
-      run: poetry run python update_users.py
+      run: poetry run python update_users.py --yes
