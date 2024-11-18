@@ -1,3 +1,4 @@
+import os
 import smtplib
 import ssl
 import tomllib
@@ -11,7 +12,7 @@ class LandgoedBlomMailServer:
             self.config = tomllib.load(f)['tool']['landgoed-blom']
 
         # Load the email template
-        with open('templates/create.md') as f:
+        with open('templates/users/create.md') as f:
             self.create_template = f.read()
 
         # Create the SSL context
