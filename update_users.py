@@ -29,15 +29,21 @@ def main(args: Namespace) -> None:
 
         logger.info(f'Adding user: {user_id}')
         user_password = generate_password()
+        display_name = master_user_list[user_id]
         user = {
             'userid': user_id,
             'password': user_password,
-            'displayName': user_id
+            'displayName': display_name
         }
         # Create the user in Nextcloud
         create_user(nc, user)
         # Send the user an email with the login information
-        mail_server.send_create_mail(user_id, master_user_list[user_id], user_password)
+        mail_server.send_create_mail(
+            display_name=display_name,
+            user_name=user_id,
+            user_email=user_id,
+            user_password=user_password
+        )
 
 
 if __name__ == '__main__':
