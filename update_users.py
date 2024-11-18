@@ -7,7 +7,7 @@ from nextcloud.auth import generate_password
 from nextcloud.mail_server import LandgoedBlomMailServer
 from nextcloud.master_userlist import load_users_from_spreadsheet
 from nextcloud.nextcloud_server import Nextcloud, NextcloudUser
-from nextcloud.users import get_user_ids, create_user, get_user, update_user
+from nextcloud.users import get_user_ids, create_user
 
 
 def main(args: Namespace) -> None:
