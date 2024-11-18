@@ -17,11 +17,16 @@ class LandgoedBlomMailServer:
         # Create the SSL context
         self.context = ssl.create_default_context()
 
-    def send_create_mail(self, user_name: str, user_email: str, user_password: str) -> None:
+        # Load the password from the environment
+        self.config['smtp_password'] = os.environ['SMTP_PASSWORD']
+
+
+    def send_create_mail(self, display_name: str, user_name: str, user_email: str, user_password: str) -> None:
         """
         Send the mail to the user with the login information
 
         Args:
+            display_name: The display name of the user
             user_name: The name of the user
             user_email: The email address of the user
             user_password: The password of the user
@@ -30,7 +35,13 @@ class LandgoedBlomMailServer:
         with smtplib.SMTP_SSL(self.config['smtp_server'], self.config['smtp_port'], context=self.context) as server:
             server.login(self.config['smtp_username'], self.config['smtp_password'])
 
-            msg = MIMEText(self.create_template.format(username=user_name, password=user_password), 'plain')
+            mail_text = self.create_template.format(
+                name=display_name,
+                username=user_name,
+                password=user_password
+            )
+
+            msg = MIMEText(mail_text, 'plain')
             msg['Subject'] = 'Welkom bij Landgoed Blom Nextcloud'
             msg['From'] = self.config['smtp_username']
             msg['To'] = user_email

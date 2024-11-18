@@ -4,8 +4,9 @@ server_url = "https://nx52347.your-storageshare.de"
 user_list_file_path = "Centrale Kring/Gebruikers Pioniersgroep.xlsx"
 user = "Admin"
 smtp_username = "pioniersgroep@buitenhuisblom.nl"
-smtp_server = "mail.buitenhuisblom.nl"
-smtp_port = 587
+smtp_server = "buitenhuisblom.nl"
+# Use port 587 for TLS, 465 for SSL
+smtp_port = 465
 
 [tool.poetry]
 name = "landgoed-blom"
