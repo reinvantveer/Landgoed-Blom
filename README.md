@@ -10,6 +10,11 @@ poetry install
 
 ## Scripts
 ### Gebruikersbeheer
+LET OP: Bij het downloaden van de gebruikerslijst kan er een versie van de lijst gedownload worden die niet de juiste
+informatie bevat, vanwege de "caching" die Nextcloud toepast. Caching zorgt ervoor dat bestanden sneller geladen kunnen
+worden, maar kan ook betekenen dat je een oudere versie van een bestand downloadt.
+
+Controleer altijd of de lijst de juiste informatie bevat. Het script helpt je hierbij.
 
 In de platformoplossing staat een document met de deelnemers van Landgoed Blom. Het script voor het beheer van de
 gebruikers maakt gebruik van dit document om gebruikers te activeren en deactiveren. Verwijderen van gebruikers is
